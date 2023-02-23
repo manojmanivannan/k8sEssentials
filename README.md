@@ -5,7 +5,7 @@
 ### Install & run minikube + helm
 - `winget install minikube`
 - `minikube start --driver=docker` (assuming docker-desktop is running)
-- `minikube addons enable ingress`
+- `minikube addons enable ingress` & `minikube tunnel`
 - `choco install kubernetes-helm`
 
 ### Interact with cluster
@@ -24,8 +24,11 @@
 ## Docker local dev
 1. `& minikube -p minikube docker-env --shell powershell | Invoke-Expression` (setup minikube to run docker builds inside the cluster itself)
 2. `docker build -t python-demo-app:init .`
+   1. `minikube ssh docker images` to list docker images
 3. `docker run --rm --publish 8000:8000 python-demo-app:init --bind 0.0.0.0 app:app` (to test)
 
 ## Kubectl Deploy
 1. `kubectl apply -f .\helm-charts\templates\namespace.yaml`
 2. `kubectl apply -f .\helm-charts\templates\deployment.yaml -f .\helm-charts\templates\service.yaml -f .\helm-charts\templates\ingress.yaml -f .\helm-charts\templates\job.yaml`
+   1. `kubectl delete -f .\helm-charts\templates\deployment.yaml -f .\helm-charts\templates\service.yaml -f .\helm-charts\templates\ingress.yaml -f .\helm-charts\templates\job.yaml`
+3. Access the application through the service `minikube -n cloud service --url python-demo-app-web`

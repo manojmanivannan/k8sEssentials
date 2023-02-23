@@ -21,7 +21,10 @@ spec:
       containers:
         - name: python-demo-app-web
           image: python-demo-app:init
-          pullPolicy: never
+          args:
+            - '--bind'
+            - '0.0.0.0'
+            - 'app:app'
           ports:
             - name: gunicorn
               containerPort: 8000
