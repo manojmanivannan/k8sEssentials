@@ -12,6 +12,8 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              serviceName: {{ $.Release.Name }}-web
-              servicePort: http
+              service:
+                name: {{ $.Release.Name }}-web
+                port:
+                  name: http
   {{- end }}
