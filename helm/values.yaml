@@ -33,3 +33,7 @@ ingress:
   rules:
     - host: python-app.demo.com
     # - host: second-host-python-app.demo.com
+
+service:
+  port: 80
+  nodePort: 30080
