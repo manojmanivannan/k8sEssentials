@@ -1,0 +1,332 @@
+/* nav specialized to landing page */
+.logo {
+  background: url('logo.svg') no-repeat;
+  background-size: contain;
+  margin: 1rem 0 0 1rem;
+}
+
+nav {
+  background-color: var(--bg-color);
+}
+
+/* hero section */
+.hero {
+  text-align: center;
+  background-color: var(--bg-color);
+  padding: 2rem 0 10rem 0;
+}
+
+.hero__title {
+  font-weight: 900;
+  color: var(--primary-color);
+}
+
+.hero__description {
+  margin: -1rem auto 2rem auto;
+}
+
+.hero__terminal {
+  width: 60%;
+  margin: -11rem auto 3rem auto;
+  text-align: left;
+  color: white;
+  padding: 0 1rem;
+  border-radius: 4px;
+  background-color: #232323;
+  min-height: 100px;
+  animation: fadeUp 2s;
+  box-shadow: 0px 12px 36.8px 9.2px rgba(0, 0, 0, 0.1);
+}
+
+.hero__terminal pre {
+  white-space: pre-line;
+  padding-top: 0rem;
+}
+
+/* feature section */
+.feature {
+  /*display: flex;*/
+  flex-wrap: wrap;
+}
+
+.feature__item {
+  /*max-width: calc(100% - 20px);*/
+  /*flex-direction: row;*/
+  /*margin: 0 0 0 0;*/
+  display: flex;
+
+}
+
+.feature__item .section__title {
+  /*max-width: calc(80%);*/
+  flex: 75%;
+  text-align: left;
+}
+
+.feature__item .section__duration {
+  /*max-width: calc(20%);*/
+  flex: 25%;
+  text-align: right;
+}
+
+.feature .section__content {
+  flex: 100%;
+  text-align: justify;
+}
+
+.feature__item p {
+  margin-top: 0.5rem;
+}
+
+.imgContainer {
+  /*background: #eee no-repeat 50% 50% /cover;*/
+  overflow: hidden;
+  height: 10%;
+
+
+}
+
+.imgContainer > img {
+  /*opacity: 0;*/
+  width: 50%;
+  float: left;
+  display: block;
+  transition: opacity .3s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  vertical-align: top;
+  transition: transform 0.25s ease;
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+
+.imgContainer > img:target {
+margin: auto;
+position: absolute;
+top: 0;
+left:0;
+right:0;
+bottom: 0;
+max-height: 0%;
+max-width: 0%;
+border: 3px solid white;
+box-shadow: 0px 0px 8px rgba(0,0,0,.3);
+box-sizing: border-box;
+-webkit-transition: .5s ease-in-out;
+-moz-transition: .5s ease-in-out;
+-o-transition: .5s ease-in-out;
+transition: .5s ease-in-out;
+}
+
+
+/* Style the Image Used to Trigger the Modal */
+.myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.myImg:hover {
+  -webkit-transform:scale(1.07);  
+  transform:scale(1.08);
+  opacity: 0.7;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(255, 255, 255); /* Fallback color */
+  background-color: rgba(245, 245, 245, 0.95); /* Black w/ opacity */
+}
+
+
+/* Modal Content (Image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  max-height: 85%;
+  width: auto;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)}
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #000000;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: rgb(233, 66, 15);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+      width: 100%;
+  }
+}
+
+/* keybinding section */
+.keybinding {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center
+
+}
+
+.keybinding__detail {
+  position: relative;
+  border: 1px solid var(--code-bg-color);
+  flex-basis: 60%;
+  padding: 2rem 1rem 1rem 1rem;
+  list-style: none;
+  line-height: 2.5rem;
+}
+
+.keybinding__detail:first-child {
+  text-align: left;
+  padding-right: 1rem;
+}
+
+.keybinding__detail:last-child {
+  padding-left: 1rem;
+  margin-left: -1px;
+}
+
+.keybinding__detail:first-child .keybinding__title {
+  position: absolute;
+  left: 0.5rem;
+  top: -2rem;
+  background-color: white;
+  padding: 0 0.5rem;
+}
+
+.keybinding__detail:last-child .keybinding__title {
+  position: absolute;
+  left: 0.5rem;
+  top: -2rem;
+  background-color: white;
+  padding: 0 0.5rem;
+}
+
+.keybinding__label {
+  background: var(--white-color);
+  border: 1px solid var(--light-gray-color);
+  box-shadow: 0 1px 0 0 var(--medium-gray-color);
+  border-radius: 3px;
+  font-family: Courier;
+  font-size: 0.7rem;
+  color: var(--dark-gray-color);
+  padding: 3px 3px 1px 3px;
+  vertical-align: middle;
+}
+
+/* callout section */
+.callout {
+  text-align: center;
+  padding: 1rem 0 3rem 0;
+}
+
+.callout .button--primary {
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* changelog section */
+.changelog {
+  background-color: var(--bg-color);
+  padding: 2rem 0;
+}
+
+.changelog__item {
+  display: flex;
+}
+
+.changelog__meta {
+  flex-basis: 25%;
+}
+
+.changelog__meta small {
+  color: var(--primary-color-light);
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+
+.changelog__title {
+  margin-bottom: 0;
+}
+
+.changelog__callout {
+  margin: 3rem auto 2rem auto;
+  text-align: center;
+}
+
+@media (max-width: 750px) {
+  .hero__terminal {
+    width: 70%;
+  }
+  .tab__container > ul {
+    right: auto;
+    left: 0;
+    padding-left: 0;
+  }
+  .tab__container .code {
+    margin-top: 2rem;
+  }
+  .feature, .keybinding, .changelog__item {
+    flex-direction: column;
+  }
+  .feature__item {
+    max-width: 100%;
+    margin: 0;
+  }
+  .keybinding {
+    font-size: 0.8rem;
+  }
+}
+
