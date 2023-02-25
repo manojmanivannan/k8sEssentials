@@ -12,6 +12,7 @@
    <link rel="stylesheet" href="scribbler-global.css">
    <link rel="stylesheet" href="scribbler-landing.css">
    <link rel="stylesheet" href="scroll.css">
+   <script src='index.yaml'></script>
    <!-- <link rel="author" href="humans.txt"> -->
    <!-- <link rel="shortcut icon" href="images/favicon.ico" /> -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -34,11 +35,40 @@
                <p style="text-indent: 50px;">Simple web UI with link to postgres
                </p>
                <div class="imgContainer">
-                  <img class="myImg inline-photo" src="images/landing.png"
+                  <img src="images/landing.png"
                      alt="Landing Page"
                      title="Landing Page">
                </div>
             </div>
+            <div class="section__content">
+                <p style="text-indent: 50px;">Available releases
+                </p>
+                <div id="list">
+
+                  </div>
+             </div>
         </div>
+        <script>
+        
+            var url = 'https://raw.githubusercontent.com/manojmanivannan/k8sEssentials/gh-pages/index.yaml';
+            var storedText;
+            var cleanText;
+
+            fetch(url)
+            .then(function(response) {
+                response.text().then(function(text) {
+                storedText = text;
+                cleanText = storedText.match(/version: [0-9]\.[0-9]\.[0-9]/);
+                console.log(text);
+                console.log(cleanText);
+                done();
+                });
+            });
+
+            function done() {
+            document.getElementById('list').textContent =
+                "Recent Release \n" + cleanText;
+            }
+        </script>
     </body>
 </html>

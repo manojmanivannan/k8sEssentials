@@ -13,7 +13,7 @@ nav {
 .hero {
   text-align: center;
   background-color: var(--bg-color);
-  padding: 2rem 0 10rem 0;
+  padding: 2rem 0 5rem 0;
 }
 
 .hero__title {
@@ -60,7 +60,7 @@ nav {
 .feature__item .section__title {
   /*max-width: calc(80%);*/
   flex: 75%;
-  text-align: left;
+  text-align: center;
 }
 
 .feature__item .section__duration {
@@ -71,7 +71,11 @@ nav {
 
 .feature .section__content {
   flex: 100%;
-  text-align: justify;
+  width: 80%;
+
+  /* text-align: justify; */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .feature__item p {
@@ -81,15 +85,15 @@ nav {
 .imgContainer {
   /*background: #eee no-repeat 50% 50% /cover;*/
   overflow: hidden;
-  height: 10%;
+  height: 40%;
 
 
 }
 
 .imgContainer > img {
   /*opacity: 0;*/
-  width: 50%;
-  float: left;
+  width: 100%;
+  float: center;
   display: block;
   transition: opacity .3s ease-in-out;
   cursor: pointer;
