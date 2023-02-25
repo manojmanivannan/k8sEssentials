@@ -1,4 +1,12 @@
 
+- [Setup (windows) \[POWERSHELL\]](#setup-windows-powershell)
+  - [Install,Setup \& Run minikube](#installsetup--run-minikube)
+  - [Interact with cluster](#interact-with-cluster)
+  - [Stop \& Remove minikube](#stop--remove-minikube)
+- [Docker Local Dev](#docker-local-dev)
+- [Helm](#helm)
+  - [Helm Template Validation](#helm-template-validation)
+- [Application ToDo](#application-todo)
 
 
 ## Setup (windows) [POWERSHELL]
@@ -23,14 +31,14 @@
 3. `docker run --rm --publish 8000:8000 manojmanivannan18/flaskedge:master --bind 0.0.0.0 app:app` (to test manually)
    
 
-### Helm Install
+## Helm
 Install helm `choco install kubernetes-helm`
 1. Add the helm repo to cluster
    - `helm repo add k8sessentials https://raw.githubusercontent.com/manojmanivannan/k8sEssentials/gh-pages` 
 2. Install the chart 
    - `helm upgrade --install --create-namespace --namespace cloud flaskedge k8sessentials/flaskedge`
 
-#### Helm Template Validation
+### Helm Template Validation
 1. `cd helm` & `helm template . --values ./values.yaml -s templates/deployment.yaml --name-template flaskedge --namespace cloud`
 2. `helm template . --values ./values.yaml -s templates\job.yaml --name-template flaskedge --namespace cloud`
 3. `helm upgrade --install --create-namespace --namespace cloud flaskedge .\helm\`
@@ -39,7 +47,7 @@ Install helm `choco install kubernetes-helm`
 
 **Access the application through the service `minikube -n cloud service --url flaskedge-web`**
 
-### Application ToDo
+## Application ToDo
 - [x] Push the image to dockerhub
 - [ ] Enable docker tags for all branches
 - [ ] Create separate charts for the application and database
