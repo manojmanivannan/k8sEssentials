@@ -1,0 +1,5 @@
+layout: page
+title: "K8s Essentials"
+permalink: /k8sEssentials
+markdown: kramdown
+remote_theme: benbalter/retlab
