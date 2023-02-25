@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>IoT Monitor</title>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1>Update Room</h1>
+
+    <div class="form">
+        <form action="/rooms/update/{{ room.id }}" method="POST">
+            <input type="text" name="room_name" id="room_name" value="{{ room.room_name }}">
+            <input class="add_btn_input" type="submit" value="Update">
+        </form>
+    </div>
+</div>
+{% endblock %}
+

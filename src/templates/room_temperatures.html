@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>IoT Monitor</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid">
+    <h1>Room: {{ room_name }}</h1>
+    {% if temperatures|length < 1 %}
+    <h4>No temperatures available for this room</h4>
+    {% else %}
+    <!-- <canvas class="container" id="myChart" style="width:100%;max-width:700px"></canvas> -->
+    <div class="container" id="myChart" style="width:100%;max-width:700px"></div>
+    <table class="table styled-table">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Date</th>
+                <th>Temperature deg C</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for temp in temperatures %}
+            <tr>
+                <!-- <td>{{ temp.id }}</td> -->
+                <td>{{ temp.date }}</td>
+                <td>{{ temp.temperature }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <div class="container">
+        <div style="align-items: right;">
+            Add new temperature datapoint 
+            <form class="form" action="/temperature/{{ room_id }}/9999.9" method="POST"> 
+                <input class="add_text_input" type="number" step="any" name="temperature_value" id="temperature_value">
+                <input class="add_btn_input" type="submit" value="Add">
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <a href="/rooms" class="btn btn-info">Back</a>
+    </div>
+</div>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type="text/javascript">
+    var graphs = {{ graphJSON | safe }};
+    Plotly.plot('myChart',graphs,{});
+    </script>
+{% endblock %}

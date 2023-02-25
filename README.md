@@ -18,9 +18,9 @@
 
 ## Docker Local Dev
 1. `& minikube -p minikube docker-env --shell powershell | Invoke-Expression` (setup minikube to run docker builds inside the cluster itself)
-2. `docker build -t flaskedge:init .`
+2. `docker build -t manojmanivannan18/flaskedge:master .`
    1. `minikube ssh docker images` to list docker images
-3. `docker run --rm --publish 8000:8000 flaskedge:init --bind 0.0.0.0 app:app` (to test manually)
+3. `docker run --rm --publish 8000:8000 manojmanivannan18/flaskedge:master --bind 0.0.0.0 app:app` (to test manually)
    
 
 ### Helm Template Validation & Packaging
@@ -39,3 +39,10 @@ Install helm `choco install kubernetes-helm`
 
 
 Access the application through the service `minikube -n cloud service --url flaskedge-web`
+
+### Application ToDo
+[x] Push the image to dockerhub
+[ ] Enable docker tags for all branches
+[x] Push helm chats to github container registry
+[ ] Push helm charts with auto tags instead of variable from ./helm/Chart.yaml
+[ ] Enable helm chats for all branches

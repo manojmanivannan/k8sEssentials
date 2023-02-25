@@ -1,2 +1,9 @@
-Flask
+flask
+python-dotenv
+psycopg2-binary
+Flask-SQLAlchemy
+SQLAlchemy
+flask-restx
+plotly
+pandas
 gunicorn
