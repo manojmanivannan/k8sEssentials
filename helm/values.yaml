@@ -1,5 +1,5 @@
 web:
-  replicas: 2
+  replicas: 1
   image: manojmanivannan18/flaskedge
   tag: master
   args:
