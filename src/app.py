@@ -7,7 +7,7 @@ from init_db import create_table_and_load_data
 import pandas as pd, plotly.express as px
 import plotly, json
 from flask import jsonify
-import logging
+import logging, os
 
 # set up logging to file
 logging.basicConfig(
@@ -38,7 +38,11 @@ app = Flask(__name__)
 
 ##### INITIALIZE DB ##########
 logger.info('Setting up database')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + join(basedir,"edgeapi.db")
+POSTGRES_PASSWORD=os.getenv("POSTGRES_ROOT_PASSWORD")
+POSTGRES_USER_NAME=os.getenv("POSTGRES_USER_NAME")
+POSTGRES_DB_NAME=os.getenv("POSTGRES_DB_NAME")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{POSTGRES_USER_NAME}:{POSTGRES_PASSWORD}@postgres:5432/{POSTGRES_DB_NAME}' #'sqlite:///' + join(basedir,"edgeapi.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -51,6 +55,7 @@ class Rooms(db.Model):
     room_id = db.relationship('Temperatures', cascade='all,delete' ,backref='rooms')
 
     def __repr__(self):
+        logger.info(f'Creating new room {self.room_name}')
         return f"<Rooms {self.room_name}>"
 
     def as_dict(self):
@@ -65,6 +70,7 @@ class Temperatures(db.Model):
 
 
     def __repr__(self) -> str:
+        logger.info(f'Setting temp={self.temperature} on room={self.room_id}')
         return f"<Temperatures {self.room_id} {self.temperature}>"
 
 
