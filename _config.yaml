@@ -1,4 +1,6 @@
 layout: page
+name: K8s Flask App
+description: A helm repo for a simple flask app
 title: "K8s Essentials"
 permalink: /k8sEssentials
 markdown: kramdown
