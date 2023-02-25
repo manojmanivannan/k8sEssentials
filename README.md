@@ -23,26 +23,26 @@
 3. `docker run --rm --publish 8000:8000 manojmanivannan18/flaskedge:master --bind 0.0.0.0 app:app` (to test manually)
    
 
-### Helm Template Validation & Packaging
+### Helm Install
 Install helm `choco install kubernetes-helm`
+1. Add the helm repo to cluster
+   - `helm repo add k8sessentials https://raw.githubusercontent.com/manojmanivannan/k8sEssentials/gh-pages` 
+2. Install the chart 
+   - `helm upgrade --install --create-namespace --namespace cloud flaskedge k8sessentials/flaskedge`
+
+#### Helm Template Validation
 1. `cd helm` & `helm template . --values ./values.yaml -s templates/deployment.yaml --name-template flaskedge --namespace cloud`
 2. `helm template . --values ./values.yaml -s templates\job.yaml --name-template flaskedge --namespace cloud`
-3. `helm upgrade --install --create-namespace --namespace cloud flaskedge helm/`
-   - `kubectl get pods,jobs,service,ingress -n cloud` ( to install from local & check if everything is up)
-4. `helm repo add k8sessentials https://raw.githubusercontent.com/manojmanivannan/k8sEssentials/gh-pages` to add the helm repo to any setup
+3. `helm upgrade --install --create-namespace --namespace cloud flaskedge .\helm\`
+4. `kubectl get pods,jobs,service,ingress -n cloud` ( to install from local & check if everything is up)
 
 
-## Kubectl Manual Deploy
-1. `kubectl apply -f .\helm\templates\namespace.yaml`
-2. `kubectl apply -f .\helm\templates\deployment.yaml -f .\helm\templates\service.yaml -f .\helm\templates\ingress.yaml -f .\helm\templates\job.yaml`
-   1. `kubectl delete -f .\helm\templates\deployment.yaml -f .\helm\templates\service.yaml -f .\helm\templates\ingress.yaml -f .\helm\templates\job.yaml`
-
-
-Access the application through the service `minikube -n cloud service --url flaskedge-web`
+**Access the application through the service `minikube -n cloud service --url flaskedge-web`**
 
 ### Application ToDo
-[x] Push the image to dockerhub
-[ ] Enable docker tags for all branches
-[x] Push helm chats to github container registry
-[ ] Push helm charts with auto tags instead of variable from ./helm/Chart.yaml
-[ ] Enable helm chats for all branches
+- [x] Push the image to dockerhub
+- [ ] Enable docker tags for all branches
+- [ ] Create separate charts for the application and database
+- [x] Push helm chats to github container registry
+- [ ] Push helm charts with auto tags instead of variable from ./helm/Chart.yaml
+- [ ] Enable helm chats for all branches
