@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   flaskedge:
   - apiVersion: v2
+    created: "2023-02-25T11:06:14.075987247Z"
+    description: A Helm chart for Kubernetes
+    digest: b98c776be29f58b6274f1fa5e4bc85014b80d13b76d8eda1783bc51832a7b050
+    name: flaskedge
+    type: application
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.1.0/flaskedge-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     created: "2023-02-24T15:45:35.382023759Z"
     description: A Helm chart for Kubernetes
     digest: 99d27f3ca8c923ccb9c23f1e9b01b1dce17a54c71a2b43ae9524fc8ba7edd4fd
@@ -37,4 +46,4 @@ entries:
     urls:
     - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.0.1/flaskedge-0.0.1.tgz
     version: 0.0.1
-generated: "2023-02-24T15:45:35.38204136Z"
+generated: "2023-02-25T11:06:14.076002147Z"
