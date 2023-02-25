@@ -1,7 +1,7 @@
 web:
   replicas: 2
-  image: ghcr.io/manojmanivannan/k8sessentials
-  tag: latest
+  image: manojmanivannan18/flaskedge
+  tag: master
   args:
     - '--bind'
     - '0.0.0.0'
@@ -15,8 +15,8 @@ web:
       cpu: 200m
 
 job:
-  image: ghcr.io/manojmanivannan/k8sessentials
-  tag: latest
+  image: manojmanivannan18/flaskedge
+  tag: master
   command:
     - python3
   args:
