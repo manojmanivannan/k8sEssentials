@@ -2,12 +2,17 @@
 
 This repo shows a simple application running in minikube. It uses typical entities like deployment, services, ingress, persistent volumes, etc like in production.
 
+### Dependencies
+1. minikube
+2. helm
+3. kubectl
+
 ## Run locally
 
-Given you have minikube installed and you are on linux machine, simply run `./minikube.start.sh`
-Each time, the docker image is built inside the minikube cluster, in order avoid it, build and cache the image before running the script.
-`docker build -t manojmanivannan18/flaskedge:master python-app/ && minikube cache add manojmanivannan18/flaskedge:master`
-minikube image load manojmanivannan18/flaskedge:master --daemon=true --overwrite=true
+Given you have minikube installed and you are on linux machine, simply run `./minikube.start.sh`. Each time, the docker image is built inside the minikube cluster, in order avoid it, build outside minikube,
+`docker build -t manojmanivannan18/flaskedge:master python-app/`
+The start script will load the image during the script
+
 
 ### Access from Browser
 

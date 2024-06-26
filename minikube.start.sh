@@ -1,65 +1,120 @@
 #!/bin/bash
 
+TOTAL_ARG_COUNT=$#
+ORIG_PARAMS=$*
+
+function show_usage(){
+  echo "Usage $0 [OPTIONS]"
+  echo ""
+  echo "      -load_daemon_img <true|false>       Flag to loads docker images from docker daemon (outside minikube) default: false"
+  echo "      -flag                               Placeholder for future"
+}
+
+if [ $TOTAL_ARG_COUNT -lt 1 ]
+then
+  show_usage
+  exit 1
+fi
+
+ATTEMPT_LOAD_FROM_DAEMON=0
+FLAG=0
+
+while [[ $# > 0 ]]
+do
+  key=$(echo "$1" | sed 's/\xe2\x80\x93/-/')
+    case $key in
+      -load_daemon_img) shift; ATTEMPT_LOAD_FROM_DAEMON=$1 ;;
+      -flag) FLAG=1 ;;
+      *)
+        echo -e "Error: Invalid option $1\n"
+        show_usage
+        exit 1
+        ;;
+    esac
+  shift
+done
+
+
+function verify_ingress(){
+  # Namespace and service names
+  NAMESPACE="ingress-nginx"
+  SERVICE="ingress-nginx-controller-admission"
+
+  # Maximum number of attempts
+  MAX_ATTEMPTS=30
+  attempt=1
+
+  echo "Waiting for the $SERVICE service to become available..."
+
+  while (( attempt <= MAX_ATTEMPTS )); do
+    # Check if the service is available
+    if kubectl get svc -n $NAMESPACE $SERVICE &> /dev/null; then
+      # Check if the endpoints are ready
+      if kubectl get endpoints -n $NAMESPACE $SERVICE -o 'jsonpath="{.subsets[*].addresses[*].ip}"' &> /dev/null; then
+        echo "$SERVICE is available."
+        break
+      fi
+    fi
+
+    echo "Attempt $attempt/$MAX_ATTEMPTS: $SERVICE is not yet available. Waiting for 5 seconds..."
+    (( attempt++ ))
+    sleep 5
+  done
+
+  if [[ $attempt -eq $MAX_ATTEMPTS ]]
+  then
+  echo "ERROR: $SERVICE did not become available after $((MAX_ATTEMPTS * DELAY)) seconds."
+  exit 1
+  fi
+}
+
 # Start Minikube
 minikube start
 
 # Enable ingress
 minikube addons enable ingress
 
-# Make sure ingress is healthy
+# Wait for Ingress Controller to be ready
+echo "Waiting for ingress controller to be ready..."
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=120s
 
-# Namespace and service names
-NAMESPACE="ingress-nginx"
-SERVICE="ingress-nginx-controller-admission"
+# verify ingress health
+verify_ingress
 
-# Maximum number of attempts
-MAX_ATTEMPTS=30
-attempt=1
+if [[ $ATTEMPT_LOAD_FROM_DAEMON == "true" ]]; then
 
-echo "Waiting for the $SERVICE service to become available..."
-
-while (( attempt <= MAX_ATTEMPTS )); do
-  # Check if the service is available
-  if kubectl get svc -n $NAMESPACE $SERVICE &> /dev/null; then
-    # Check if the endpoints are ready
-    if kubectl get endpoints -n $NAMESPACE $SERVICE -o 'jsonpath="{.subsets[*].addresses[*].ip}"' &> /dev/null; then
-      echo "$SERVICE is available."
-      break
-    fi
-  fi
-
-  echo "Attempt $attempt/$MAX_ATTEMPTS: $SERVICE is not yet available. Waiting for 5 seconds..."
-  (( attempt++ ))
-  sleep 5
-done
-
-if [[ $attempt -eq $MAX_ATTEMPTS ]]
-then
-echo "ERROR: $SERVICE did not become available after $((MAX_ATTEMPTS * DELAY)) seconds."
-exit 1
+  # Load image from docker daemon to minikube
+  echo "Attempting to load docker image from docker daemon"
+  minikube image load manojmanivannan18/flaskedge:master $HOME/.minikube/cache/images/manojmanivannan18_flaskedge_master
 fi
+
 
 # Build Docker images
 eval $(minikube docker-env)
 
 if docker images | grep -q flaskedge ;
 then
-  echo "Image manojmanivannan18/flaskedge:master already present"
+  echo "Image manojmanivannan18/flaskedge:master present in minikube"
 else
+  echo "Image manojmanivannan18/flaskedge:master not available in minikube, building..."
   docker build -t manojmanivannan18/flaskedge:master python-app/
+  echo "Saving (cache) image for next time"
+  minikube image save manojmanivannan18/flaskedge:master $HOME/.minikube/cache/images/manojmanivannan18_flaskedge_master --daemon=true
 fi
-
 
 
 
 # Deploy Helm charts
 helm install postgres ./postgres/charts/postgres
-helm install python-app ./python-app/charts/python-app
 helm install dbjob ./dbjob/charts/dbjob
+helm install python-app ./python-app/charts/python-app
 
 # Wait for the ingress resource to be created and have an IP address assigned
 echo "Waiting for ingress resource to be created and assigned an IP address..."
-while : ; do
+while true; do
   INGRESS_IP=$(kubectl get ingress -o 'jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}"' 2>/dev/null)
   if [ $? -eq 0 ] && [ -n "$INGRESS_IP" ]; then
     break
