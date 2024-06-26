@@ -1,0 +1,26 @@
+replicaCount: 1
+image:
+  repository: manojmanivannan18/flaskedge
+  tag: master
+  pullPolicy: IfNotPresent
+  args:
+    - '--bind'
+    - '0.0.0.0'
+    - 'app:app'
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 256Mi
+      cpu: 200m
+
+ingress:
+  rules:
+    - host: python-app.demo.com
+
+# service:
+#   port: 8080
+#   targetPort: 8000
+
+

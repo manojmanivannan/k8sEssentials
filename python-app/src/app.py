@@ -42,7 +42,7 @@ POSTGRES_PASSWORD=os.getenv("POSTGRES_ROOT_PASSWORD")
 POSTGRES_USER_NAME=os.getenv("POSTGRES_USER_NAME")
 POSTGRES_DB_NAME=os.getenv("POSTGRES_DB_NAME")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{POSTGRES_USER_NAME}:{POSTGRES_PASSWORD}@postgres:5432/{POSTGRES_DB_NAME}' #'sqlite:///' + join(basedir,"edgeapi.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{POSTGRES_USER_NAME}:{POSTGRES_PASSWORD}@postgres-service:5432/{POSTGRES_DB_NAME}' #'sqlite:///' + join(basedir,"edgeapi.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

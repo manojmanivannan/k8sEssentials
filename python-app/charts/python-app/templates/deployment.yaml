@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+      containers:
+        - name: python-app-instance
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullpolicy }}
+          env:
+          - name: POSTGRES_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secrets
+                key: db_root_password
+          - name: POSTGRES_USER_NAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secrets
+                key: db_user
+          - name: POSTGRES_DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secrets
+                key: db_name
+          args:
+          {{- range .Values.image.args }}
+            - {{ quote . }}
+          {{- end }}
+          ports:
+            - containerPort: 8000
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          readinessProbe:
+            initialDelaySeconds: 15
+            httpGet:
+              port: 8000
+              path: /
+          livenessProbe:
+            initialDelaySeconds: 15
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - 'pidof -x gunicorn'
