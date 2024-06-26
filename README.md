@@ -38,3 +38,11 @@ Location: /rooms
 
 #### Postgres
 `psql -U admin -d house`
+
+## Application ToDo
+- [x] Push the image to dockerhub
+- [ ] Enable docker tags for all branches
+- [x] Create separate charts for the application and database
+- [x] Push helm chats to github container registry
+- [ ] Push helm charts with auto tags instead of variable from Chart.yaml
+- [ ] Enable helm charts for all branches
