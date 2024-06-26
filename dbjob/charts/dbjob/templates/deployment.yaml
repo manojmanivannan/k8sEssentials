@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Release.Name }}-job
-  namespace: {{ .Release.Namespace }}
 spec:
   template:
     metadata:

@@ -1,56 +1,39 @@
+# k8s Demo Application
 
-- [Setup (windows) \[POWERSHELL\]](#setup-windows-powershell)
-  - [Install,Setup \& Run minikube](#installsetup--run-minikube)
-  - [Interact with cluster](#interact-with-cluster)
-  - [Stop \& Remove minikube](#stop--remove-minikube)
-- [Docker Local Dev](#docker-local-dev)
-- [Helm](#helm)
-  - [Helm Template Validation](#helm-template-validation)
-- [Application ToDo](#application-todo)
+This repo shows a simple application running in minikube. It uses typical entities like deployment, services, ingress, persistent volumes, etc like in production.
+
+## Run locally
+Given you have minikube installed and you are on linux machine, simply run `./minikube.start.sh`
 
 
-## Setup (windows) [POWERSHELL]
-### Install,Setup & Run minikube
-- `winget install minikube`
-- `minikube start --driver=docker` (assuming docker-desktop is running)
-- `& minikube -p minikube docker-env --shell powershell | Invoke-Expression` (setup minikube to run docker builds inside the cluster itself)
-- `minikube addons enable ingress` 
+### Access from Browser
+Open the URL generated from `echo $(minikube service --url python-app-service)`
 
+Append DNS entry to `/etc/hosts` using `echo "$(minikube ip)  python-app.demo.com" >> /etc/hosts`
 
-### Interact with cluster
-- `alias kubectl="minikube kubectl --"` or `set kubectl="minikube kubectl --"`, then use `kubectl` to interact
+So you can access the application from browser using `python-app.demo.com`
 
-### Stop & Remove minikube
-- `minikube stop`
-- `minikube delete --all`
+### Verify
 
-## Docker Local Dev
-1. `& minikube -p minikube docker-env --shell powershell | Invoke-Expression` (setup minikube to run docker builds inside the cluster itself)
-2. `docker build -t manojmanivannan18/flaskedge:master .`
-   1. `minikube ssh docker images` to list docker images
-3. `docker run --rm --publish 8000:8000 manojmanivannan18/flaskedge:master --bind 0.0.0.0 app:app` (to test manually)
-   
+once the minikube start script is finished, verify you see output
 
-## Helm
-Install helm `choco install kubernetes-helm`
-1. Add the helm repo to cluster
-   - `helm repo add k8sessentials https://raw.githubusercontent.com/manojmanivannan/k8sEssentials/gh-pages` 
-2. Install the chart 
-   - `helm upgrade --install --create-namespace --namespace cloud flaskedge k8sessentials/flaskedge`
+Command: `curl --resolve "python-app.demo.com:80:$( minikube ip )" -i http://python-app.demo.com`
 
-### Helm Template Validation
-1. `cd helm` & `helm template . --values ./values.yaml -s templates/deployment.yaml --name-template flaskedge --namespace cloud`
-2. `helm template . --values ./values.yaml -s templates\job.yaml --name-template flaskedge --namespace cloud`
-3. `helm upgrade --install --create-namespace --namespace cloud flaskedge .\helm\`
-4. `kubectl get pods,jobs,service,ingress -n cloud` ( to install from local & check if everything is up)
+Output: 
+```bash
+HTTP/1.1 302 FOUND
+Date: Wed, 26 Jun 2024 13:24:40 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 199
+Connection: keep-alive
+Location: /rooms
 
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to the target URL: <a href="/rooms">/rooms</a>. If not, click the link.
+```
 
-**Access the application through the service `minikube -n cloud service --url flaskedge-web`**
-
-## Application ToDo
-- [x] Push the image to dockerhub
-- [ ] Enable docker tags for all branches
-- [ ] Create separate charts for the application and database
-- [x] Push helm chats to github container registry
-- [ ] Push helm charts with auto tags instead of variable from ./helm/Chart.yaml
-- [ ] Enable helm chats for all branches
+#### Postgres
+`psql -U admin -d house`

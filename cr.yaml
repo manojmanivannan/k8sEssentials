@@ -1,4 +1,4 @@
 owner: manojmanivannan
-git-repo: k8sEssentials
+git-repo: my-k8s-app
 skip-existing: true
 generate-release-notes : true

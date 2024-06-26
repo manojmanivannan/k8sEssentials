@@ -1,0 +1,14 @@
+job:
+  image: python-app
+  tag: 0.0.1
+  command:
+    - python3
+  args:
+    - cli.py
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 256Mi
+      cpu: 200m
