@@ -43,12 +43,12 @@ spec:
             - containerPort: 8000
           resources: {{ toYaml .Values.resources | nindent 12 }}
           readinessProbe:
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             httpGet:
               port: 8000
               path: /
           livenessProbe:
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             exec:
               command:
                 - /bin/sh
