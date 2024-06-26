@@ -3,10 +3,11 @@
 This repo shows a simple application running in minikube. It uses typical entities like deployment, services, ingress, persistent volumes, etc like in production.
 
 ## Run locally
+
 Given you have minikube installed and you are on linux machine, simply run `./minikube.start.sh`
 
-
 ### Access from Browser
+
 Open the URL generated from `echo $(minikube service --url python-app-service)`
 
 Append DNS entry to `/etc/hosts` using `echo "$(minikube ip)  python-app.demo.com" >> /etc/hosts`
