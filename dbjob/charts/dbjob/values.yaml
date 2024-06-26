@@ -1,6 +1,6 @@
 job:
-  image: python-app
-  tag: 0.0.1
+  repository: manojmanivannan18/flaskedge
+  tag: master
   command:
     - python3
   args:

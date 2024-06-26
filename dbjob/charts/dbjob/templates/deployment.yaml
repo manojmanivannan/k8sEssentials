@@ -15,7 +15,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: {{ .Release.Name }}-job
-          image: {{ .Values.job.image }}:{{ .Values.job.tag }}
+          image: {{ .Values.job.repository }}:{{ .Values.job.tag }}
           command:
           {{- range .Values.job.command }}
             - {{ quote . }}

@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
-  repository: python-app
-  tag: 0.0.1
+  repository: manojmanivannan18/flaskedge
+  tag: master
   pullPolicy: IfNotPresent
   args:
     - '--bind'

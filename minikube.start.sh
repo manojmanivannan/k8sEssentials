@@ -8,7 +8,7 @@ minikube addons enable ingress
 
 # Build Docker images
 eval $(minikube docker-env)
-docker build -t python-app:0.0.1 python-app/
+docker build -t manojmanivannan18/flaskedge:master python-app/
 
 
 # Deploy configurations
