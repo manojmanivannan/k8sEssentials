@@ -11,7 +11,7 @@ docker rm -f $(docker ps -a -q --filter "name=python-app")
 docker rm -f $(docker ps -a -q --filter "name=postgres")
 
 # Remove Docker images
-docker rmi -f python-app:0.0.1
+docker rmi -f manojmanivannan18/flaskedge:master
 docker rmi -f postgres:12.7
 
 # Delete Minikube cluster

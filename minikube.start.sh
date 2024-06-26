@@ -32,4 +32,4 @@ kubectl wait --for=condition=ready pod -l app=python-app --timeout=120s
 
 # Show the running application
 echo "Application running at"
-echo "$(minikube service --url python-app-service)"
+minikube service --url python-app-service
