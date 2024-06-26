@@ -6,9 +6,51 @@ minikube start
 # Enable ingress
 minikube addons enable ingress
 
+# Make sure ingress is healthy
+
+# Namespace and service names
+NAMESPACE="ingress-nginx"
+SERVICE="ingress-nginx-controller-admission"
+
+# Maximum number of attempts
+MAX_ATTEMPTS=30
+attempt=1
+
+echo "Waiting for the $SERVICE service to become available..."
+
+while (( attempt <= MAX_ATTEMPTS )); do
+  # Check if the service is available
+  if kubectl get svc -n $NAMESPACE $SERVICE &> /dev/null; then
+    # Check if the endpoints are ready
+    if kubectl get endpoints -n $NAMESPACE $SERVICE -o 'jsonpath="{.subsets[*].addresses[*].ip}"' &> /dev/null; then
+      echo "$SERVICE is available."
+      break
+    fi
+  fi
+
+  echo "Attempt $attempt/$MAX_ATTEMPTS: $SERVICE is not yet available. Waiting for 5 seconds..."
+  (( attempt++ ))
+  sleep 5
+done
+
+if [[ $attempt -eq $MAX_ATTEMPTS ]]
+then
+echo "ERROR: $SERVICE did not become available after $((MAX_ATTEMPTS * DELAY)) seconds."
+exit 1
+fi
+
 # Build Docker images
 eval $(minikube docker-env)
-docker build -t manojmanivannan18/flaskedge:master python-app/
+
+if docker images | grep -q flaskedge ;
+then
+  echo "Image manojmanivannan18/flaskedge:master already present"
+else
+  docker build -t manojmanivannan18/flaskedge:master python-app/
+fi
+
+
+
 
 # Deploy Helm charts
 helm install postgres ./postgres/charts/postgres

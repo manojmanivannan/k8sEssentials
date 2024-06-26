@@ -5,6 +5,9 @@ This repo shows a simple application running in minikube. It uses typical entiti
 ## Run locally
 
 Given you have minikube installed and you are on linux machine, simply run `./minikube.start.sh`
+Each time, the docker image is built inside the minikube cluster, in order avoid it, build and cache the image before running the script.
+`docker build -t manojmanivannan18/flaskedge:master python-app/ && minikube cache add manojmanivannan18/flaskedge:master`
+minikube image load manojmanivannan18/flaskedge:master --daemon=true --overwrite=true
 
 ### Access from Browser
 
