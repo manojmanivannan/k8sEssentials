@@ -36,7 +36,7 @@
     <div class="container">
         <div style="align-items: right;">
             Add new temperature datapoint 
-            <form class="form" action="/temperature/{{ room_id }}/9999.9" method="POST"> 
+            <form class="form" action="/temperature/{{ room_id }}" method="POST"> 
                 <input class="add_text_input" type="number" step="any" name="temperature_value" id="temperature_value">
                 <input class="add_btn_input" type="submit" value="Add">
             </form>

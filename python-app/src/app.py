@@ -135,11 +135,10 @@ def delete_room(room_id):
             return {"message":f"Room delete failed {e}"}
 
 
-@app.route("/temperature/<string:room_id>/<float:temp>", methods=['POST'])
-def add_temp(room_id,temp):
+@app.route("/temperature/<string:room_id>", methods=['POST'])
+def add_temp(room_id):
     if request.method == "POST":
-        if temp==9999.9:
-            temp = request.form['temperature_value']
+        temp = request.form['temperature_value']
         new_temp = Temperatures(room_id=room_id,temperature=float(temp))
 
         try:
