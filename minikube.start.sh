@@ -71,7 +71,7 @@ function verify_ingress(){
 }
 
 # Start Minikube
-minikube start
+minikube start --listen-address='0.0.0.0' --ports 32080:32080
 
 # Enable ingress
 minikube addons enable ingress

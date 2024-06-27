@@ -16,8 +16,9 @@ The start script will load the image during the script
 
 ### Access from Browser
 
-Open the URL generated from `echo $(minikube service --url python-app-service)`
+Open the URL generated from `echo $(minikube service --url python-app-service)` or `localhost:32080`
 
+#### Optional Domain
 Append DNS entry to `/etc/hosts` using `echo "$(minikube ip)  python-app.demo.com" >> /etc/hosts`
 
 So you can access the application from browser using `python-app.demo.com`
@@ -25,6 +26,10 @@ So you can access the application from browser using `python-app.demo.com`
 ### Verify
 
 once the minikube start script is finished, verify you see output
+
+Command: `curl --resolve "0.0.0.0:32080:$( minikube ip )" -i http://0.0.0.0:32080`
+
+Or if you used the optional domain:
 
 Command: `curl --resolve "python-app.demo.com:80:$( minikube ip )" -i http://python-app.demo.com`
 
@@ -43,6 +48,8 @@ Location: /rooms
 <h1>Redirecting...</h1>
 <p>You should be redirected automatically to the target URL: <a href="/rooms">/rooms</a>. If not, click the link.
 ```
+
+Since the minikube exposed to localhost on the host machine, you can even access the application from remote servers using the host machine's IP:32080
 
 #### Postgres
 `psql -U admin -d house`
