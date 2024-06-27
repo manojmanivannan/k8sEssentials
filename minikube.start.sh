@@ -6,8 +6,8 @@ ORIG_PARAMS=$*
 function show_usage(){
   echo "Usage $0 [OPTIONS]"
   echo ""
-  echo "      -load_daemon_img <true|false>       Flag to loads docker images from docker daemon (outside minikube) default: false"
-  echo "      -flag                               Placeholder for future"
+  echo "      -load_daemon_img <true|false>       Enable loading docker image from docker daemon (outside minikube) default: false"
+  echo "      -disable_build                      Disable docker build process. It should attempt to pull the image from dockerhub remote repo"
 }
 
 if [ $TOTAL_ARG_COUNT -lt 1 ]
@@ -16,7 +16,8 @@ then
   exit 1
 fi
 
-ATTEMPT_LOAD_FROM_DAEMON=0
+ATTEMPT_LOAD_FROM_DAEMON="false"
+DOCKER_BUILD=1
 FLAG=0
 
 while [[ $# > 0 ]]
@@ -25,6 +26,7 @@ do
     case $key in
       -load_daemon_img) shift; ATTEMPT_LOAD_FROM_DAEMON=$1 ;;
       -flag) FLAG=1 ;;
+      -disable_build) DOCKER_BUILD=0 ;;
       *)
         echo -e "Error: Invalid option $1\n"
         show_usage
@@ -95,16 +97,22 @@ fi
 # Build Docker images
 eval $(minikube docker-env)
 
-if docker images | grep -q flaskedge ;
-then
-  echo "Image manojmanivannan18/flaskedge:master present in minikube"
+if [[ $DOCKER_BUILD -eq 1 ]]; then
+  if docker images | grep -q flaskedge; then
+    echo "Image manojmanivannan18/flaskedge:master present in minikube"
+  else
+    echo "Image manojmanivannan18/flaskedge:master not available in minikube, building..."
+    docker build -t manojmanivannan18/flaskedge:master python-app/
+    echo "Saving (cache) image for next time"
+    minikube image save manojmanivannan18/flaskedge:master $HOME/.minikube/cache/images/manojmanivannan18_flaskedge_master --daemon=true
+  fi
+  echo "Setting python-app values to use local image"
+  sed -i 's/pullPolicy:.*/pullPolicy: IfNotPresent/' ./python-app/charts/python-app/values.yaml
 else
-  echo "Image manojmanivannan18/flaskedge:master not available in minikube, building..."
-  docker build -t manojmanivannan18/flaskedge:master python-app/
-  echo "Saving (cache) image for next time"
-  minikube image save manojmanivannan18/flaskedge:master $HOME/.minikube/cache/images/manojmanivannan18_flaskedge_master --daemon=true
+  echo "Docker image build disabled"
+  echo "Setting python-app values to pull remote image"
+  sed -i 's/pullPolicy:.*/pullPolicy: Always/' ./python-app/charts/python-app/values.yaml
 fi
-
 
 
 # Deploy Helm charts
