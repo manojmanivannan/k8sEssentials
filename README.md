@@ -51,7 +51,7 @@ Location: /rooms
 
 Since the minikube exposed to localhost on the host machine, you can even access the application from remote servers using the host machine's IP:32080
 
-### Run by helm install
+## Run by helm install
 
 1. `minikube start`
 2. `helm repo add k8sessentials https://raw.githubusercontent.com/manojmanivannan/k8sEssentials/gh-pages`
