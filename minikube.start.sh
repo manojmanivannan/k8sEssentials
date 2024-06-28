@@ -110,23 +110,23 @@ if [[ $DOCKER_BUILD == "true" ]]; then
     echo "Image manojmanivannan18/flaskedge:master present in minikube"
   else
     echo "Image manojmanivannan18/flaskedge:master not available in minikube, building..."
-    docker build -t manojmanivannan18/flaskedge:master python-app/
+    docker build -t manojmanivannan18/flaskedge:master .
     echo "Saving (cache) image for next time"
     minikube image save manojmanivannan18/flaskedge:master $HOME/.minikube/cache/images/manojmanivannan18_flaskedge_master --daemon=true
   fi
   echo "Setting python-app values to use local image"
-  sed -i 's/pullPolicy:.*/pullPolicy: IfNotPresent/' ./python-app/charts/python-app/values.yaml
+  sed -i 's/pullPolicy:.*/pullPolicy: IfNotPresent/' ./helm/python-app/charts/python-app/values.yaml
 else
   echo "Docker image build disabled"
   echo "Setting python-app values to pull remote image"
-  sed -i 's/pullPolicy:.*/pullPolicy: Always/' ./python-app/charts/python-app/values.yaml
+  sed -i 's/pullPolicy:.*/pullPolicy: Always/' ./helm/python-app/charts/python-app/values.yaml
 fi
 
 
 # Deploy Helm charts
-helm install postgres ./postgres/charts/postgres
-helm install dbjob ./dbjob/charts/dbjob
-helm install python-app ./python-app/charts/python-app
+helm install postgres ./helm/postgres
+helm install dbjob ./helm/dbjob
+helm install python-app ./helm/python-app
 
 # Wait for the ingress resource to be created and have an IP address assigned
 echo "Waiting for ingress resource to be created and assigned an IP address..."
