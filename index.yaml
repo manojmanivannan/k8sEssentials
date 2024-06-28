@@ -1,5 +1,15 @@
 apiVersion: v1
 entries:
+  dbjob:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-06-28T12:09:17.942725084Z"
+    description: A Job to setup DB
+    digest: 5b65df11dbc631f526833a63345160c247c2bcfcfa45229553d3df4db48107a2
+    name: dbjob
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/dbjob-0.0.1/dbjob-0.0.1.tgz
+    version: 0.0.1
   flaskedge:
   - apiVersion: v2
     created: "2023-02-25T15:22:08.916740287Z"
@@ -55,4 +65,14 @@ entries:
     urls:
     - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.0.1/flaskedge-0.0.1.tgz
     version: 0.0.1
-generated: "2023-02-25T15:22:08.916761587Z"
+  python-app:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-06-28T12:09:18.037851198Z"
+    description: A Python Flask application
+    digest: f585b57cae7ae952c3db3ec765c45d8f3fd110bff924c2464fdb736a09fd01e5
+    name: python-app
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/python-app-0.1.0/python-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-06-28T12:09:18.037874552Z"
