@@ -124,9 +124,9 @@ fi
 
 
 # Deploy Helm charts
-helm install postgres ./helm/postgres/charts/postgres
-helm install dbjob ./helm/dbjob/charts/dbjob
-helm install python-app ./helm/python-app/charts/python-app
+helm install postgres ./helm/postgres
+helm install dbjob ./helm/dbjob
+helm install python-app ./helm/python-app
 
 # Wait for the ingress resource to be created and have an IP address assigned
 echo "Waiting for ingress resource to be created and assigned an IP address..."
