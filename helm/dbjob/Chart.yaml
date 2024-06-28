@@ -1,5 +1,5 @@
 apiVersion: v2
 name: dbjob
 description: A Job to setup DB
-version: 1.1.1
-appVersion: "1.0"
+version: 1.1.2
+appVersion: "1.1"
