@@ -1,1 +1,106 @@
-
+apiVersion: v1
+entries:
+  dbjob:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-06-28T12:12:38.174320137Z"
+    description: A Job to setup DB
+    digest: 9f084be75c421d715e88cd36b00db90c70ea853ab8fa4b9a6c1ca65cc15026c9
+    name: dbjob
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/dbjob-1.0.0/dbjob-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-06-28T12:09:17.942725084Z"
+    description: A Job to setup DB
+    digest: 5b65df11dbc631f526833a63345160c247c2bcfcfa45229553d3df4db48107a2
+    name: dbjob
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/dbjob-0.0.1/dbjob-0.0.1.tgz
+    version: 0.0.1
+  flaskedge:
+  - apiVersion: v2
+    created: "2023-02-25T15:22:08.916740287Z"
+    description: A Helm chart for Kubernetes
+    digest: 29de291055ab8c40ad22161d8575ebe13a6d70bf90c9e24f5ca7a74d1d5e274a
+    name: flaskedge
+    type: application
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.2.0/flaskedge-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    created: "2023-02-25T11:06:14.075987247Z"
+    description: A Helm chart for Kubernetes
+    digest: b98c776be29f58b6274f1fa5e4bc85014b80d13b76d8eda1783bc51832a7b050
+    name: flaskedge
+    type: application
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.1.0/flaskedge-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
+    created: "2023-02-24T15:45:35.382023759Z"
+    description: A Helm chart for Kubernetes
+    digest: 99d27f3ca8c923ccb9c23f1e9b01b1dce17a54c71a2b43ae9524fc8ba7edd4fd
+    name: flaskedge
+    type: application
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.0.4/flaskedge-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    created: "2023-02-24T15:16:18.854726152Z"
+    description: A Helm chart for Kubernetes
+    digest: deb7cb8f0a110775a053bc9e36f929f28766941ac916eff8d0fa7992e3bc68b5
+    name: flaskedge
+    type: application
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.0.3/flaskedge-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    created: "2023-02-24T15:13:28.340991266Z"
+    description: A Helm chart for Kubernetes
+    digest: cfa0da49e0648f2b1768799d1a73020a53cbde41c2ef7072d7f7f21c43703460
+    name: flaskedge
+    type: application
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.0.2/flaskedge-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    created: "2023-02-24T15:10:19.431009759Z"
+    description: A Helm chart for Kubernetes
+    digest: 3238b92bbdf818c4afca7ae9154e8e8a8b650340e2392dc6d60341979a318bc9
+    name: flaskedge
+    type: application
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/flaskedge-0.0.1/flaskedge-0.0.1.tgz
+    version: 0.0.1
+  postgres:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-06-28T12:12:38.270301768Z"
+    description: Postgres
+    digest: 442a097557aae0bb44cac1a1b0dc3e1b15abf733ac09f815a77f31f253f0688c
+    name: postgres
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/postgres-1.0.0/postgres-1.0.0.tgz
+    version: 1.0.0
+  python-app:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-06-28T12:12:38.368592801Z"
+    description: A Python Flask application
+    digest: 1eb89cbf70aaa0ae93871555f0068008901ed4ea94675dee341d373c90f08eb4
+    name: python-app
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/python-app-1.0.0/python-app-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-06-28T12:09:18.037851198Z"
+    description: A Python Flask application
+    digest: f585b57cae7ae952c3db3ec765c45d8f3fd110bff924c2464fdb736a09fd01e5
+    name: python-app
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/python-app-0.1.0/python-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-06-28T12:12:38.368650238Z"
