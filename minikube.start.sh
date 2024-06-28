@@ -6,27 +6,28 @@ ORIG_PARAMS=$*
 function show_usage(){
   echo "Usage $0 [OPTIONS]"
   echo ""
-  echo "      -load_daemon_img <true|false>       Enable loading docker image from docker daemon (outside minikube) default: false"
-  echo "      -disable_build                      Disable docker build process. It should attempt to pull the image from dockerhub remote repo"
+  echo "      -l | --load_daemon_img          Enable loading docker image from docker daemon (outside minikube) default: false"
+  echo "      -d | --disable_build            Disable docker build process. It should attempt to pull the image from dockerhub remote repo"
+  echo "      -e | --expose_localhost         Expose minikube IP to localhost, such that you can access the application by localhost:PORT instead of MINIKUBE_IP:PORT"
 }
 
-if [ $TOTAL_ARG_COUNT -lt 1 ]
-then
-  show_usage
-  exit 1
-fi
+
 
 ATTEMPT_LOAD_FROM_DAEMON="false"
-DOCKER_BUILD=1
+DOCKER_BUILD="true"
+EXPOSE_LOCALHOST=""
 FLAG=0
+
 
 while [[ $# > 0 ]]
 do
-  key=$(echo "$1" | sed 's/\xe2\x80\x93/-/')
+  key="$1"
     case $key in
-      -load_daemon_img) shift; ATTEMPT_LOAD_FROM_DAEMON=$1 ;;
-      -flag) FLAG=1 ;;
-      -disable_build) DOCKER_BUILD=0 ;;
+      -l|--load_daemon_img) ATTEMPT_LOAD_FROM_DAEMON="true" ;;
+      -f|--flag) shift; FLAG=$1 ;;
+      -d|--disable_build) DOCKER_BUILD="false" ;;
+      -e|--expose_localhost) EXPOSE_LOCALHOST="--listen-address='0.0.0.0' --ports 32080:32080" ;;
+      -h|--help) show_usage; exit 1 ;;
       *)
         echo -e "Error: Invalid option $1\n"
         show_usage
@@ -35,6 +36,13 @@ do
     esac
   shift
 done
+
+echo "Settings"
+echo "1. Attemping to load image from daemon = $ATTEMPT_LOAD_FROM_DAEMON"
+echo "2. Building docker image = $DOCKER_BUILD"
+echo "3. Expose localhost command = $EXPOSE_LOCALHOST"
+echo ""
+
 
 
 function verify_ingress(){
@@ -71,7 +79,7 @@ function verify_ingress(){
 }
 
 # Start Minikube
-minikube start --listen-address='0.0.0.0' --ports 32080:32080
+minikube start $EXPOSE_LOCALHOST
 
 # Enable ingress
 minikube addons enable ingress
@@ -97,7 +105,7 @@ fi
 # Build Docker images
 eval $(minikube docker-env)
 
-if [[ $DOCKER_BUILD -eq 1 ]]; then
+if [[ $DOCKER_BUILD == "true" ]]; then
   if docker images | grep -q flaskedge; then
     echo "Image manojmanivannan18/flaskedge:master present in minikube"
   else
