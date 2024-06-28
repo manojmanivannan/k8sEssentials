@@ -1,20 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-app
+  name: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: python-app
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: python-app
+        app: {{ .Release.Name }}
     spec:
       securityContext:
         runAsGroup: 1000
         runAsUser: 1000
+      initContainers:
+        - name: {{ .Release.Name }}-init
+          image: busybox:1.28
+          command:
+          {{- range .Values.image.initCommand }}
+            - {{ quote . }}
+          {{- end }}
       containers:
         - name: python-app-instance
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
