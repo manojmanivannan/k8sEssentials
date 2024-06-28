@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   dbjob:
   - apiVersion: v2
+    appVersion: "1.1"
+    created: "2024-06-28T15:09:08.444613855Z"
+    description: A Job to setup DB
+    digest: 370096a21d012ab82f2aff19de3ca2a755335c0df8804ba3ba3dd9cf0d79bd7d
+    name: dbjob
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/dbjob-1.1.2/dbjob-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
     appVersion: "1.0"
     created: "2024-06-28T12:12:38.174320137Z"
     description: A Job to setup DB
@@ -76,6 +85,15 @@ entries:
     version: 0.0.1
   postgres:
   - apiVersion: v2
+    appVersion: "1.1"
+    created: "2024-06-28T15:09:08.553234388Z"
+    description: Postgres
+    digest: 6805128a256b4a1c1c8a858bfbf3452d2349ec693c2232f6c7ea57b2a2650d8b
+    name: postgres
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/postgres-1.1.2/postgres-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
     appVersion: "1.0"
     created: "2024-06-28T12:12:38.270301768Z"
     description: Postgres
@@ -85,6 +103,15 @@ entries:
     - https://github.com/manojmanivannan/k8sEssentials/releases/download/postgres-1.0.0/postgres-1.0.0.tgz
     version: 1.0.0
   python-app:
+  - apiVersion: v2
+    appVersion: "1.1"
+    created: "2024-06-28T15:09:08.671442631Z"
+    description: A Python Flask application
+    digest: 33838123bdf573ba2dd3f65f50a7426d73f7188b343f00c66026254990e31539
+    name: python-app
+    urls:
+    - https://github.com/manojmanivannan/k8sEssentials/releases/download/python-app-1.1.2/python-app-1.1.2.tgz
+    version: 1.1.2
   - apiVersion: v2
     appVersion: "1.0"
     created: "2024-06-28T12:12:38.368592801Z"
@@ -103,4 +130,4 @@ entries:
     urls:
     - https://github.com/manojmanivannan/k8sEssentials/releases/download/python-app-0.1.0/python-app-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-28T12:12:38.368650238Z"
+generated: "2024-06-28T15:09:08.671483648Z"
