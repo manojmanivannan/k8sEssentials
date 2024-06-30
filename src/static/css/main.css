@@ -1,0 +1,17 @@
+.flashes {
+    list-style: none;
+    padding: 0;
+}
+.flashes li {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+.flashes li.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.flashes li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

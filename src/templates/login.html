@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>IoT Monitor</title>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h2>Login</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form class="form" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Login">
+    </form>
+    <div class="container">
+    Don't have an account?
+    <a class="btn btn-info" href="{{ url_for('signup') }}"> Sign up here</a>
+    </div>
+</div>
+{% endblock %}

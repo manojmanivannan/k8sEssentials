@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import Flask, request, render_template, url_for, redirect
+from flask import Flask, request, render_template, url_for, redirect, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from os.path import join, abspath, dirname
@@ -8,6 +9,7 @@ import pandas as pd, plotly.express as px
 import plotly, json
 from flask import jsonify
 import logging, os
+import psycopg2
 
 # set up logging to file
 logging.basicConfig(
@@ -35,6 +37,7 @@ logger = logging.getLogger(__name__)
 basedir = abspath(dirname(__file__))
 
 app = Flask(__name__)
+app.secret_key = "FLASK_APP_SECRET_KEY"
 
 ##### INITIALIZE DB ##########
 logger.info('Setting up database')
@@ -67,20 +70,76 @@ class Temperatures(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
     temperature = db.Column(db.Float, nullable=False)
     room_id = db.Column(db.Integer,db.ForeignKey('rooms.id'), nullable=False)
+    # user_id = db.Column(db.Integer,db.ForeignKey('users.id'), nullable=False)
 
 
     def __repr__(self) -> str:
         logger.info(f'Setting temp={self.temperature} on room={self.room_id}')
         return f"<Temperatures {self.room_id} {self.temperature}>"
 
+class Users(db.Model):
+    id = db.Column(db.Integer,primary_key=True, autoincrement=True, nullable=False)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(200), nullable=False)
 
-create_table_and_load_data(app, db, Rooms, Temperatures)
+    def __repr__(self) -> str:
+        logger.info(f'Setting user {self.username}')
+        return f"<Users {self.username} {self.password_hash}>"
+    
+create_table_and_load_data(app, db, Rooms, Temperatures, Users)
 
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        password_hash = generate_password_hash(password)
+
+        new_user = Users(username=username, password_hash=password_hash)
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            flash('You have successfully signed up! Login NOW', 'success')
+            logger.info(f'New user "{username}" added')
+            return redirect("/login")
+
+        except Exception as e:
+            db.session.rollback()
+            if 'psycopg2.errors.UniqueViolation' in e:
+                logger.error(f"Error User already exists: {e}")
+                flash(f'User "{username}" already exists', 'error')
+            else:
+                logger.error(f"Error signing up: {e}")
+                flash('Sign up failed', 'error')
+            return redirect(url_for('signup'))
+ 
+    return render_template('signup.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = Users.query.filter_by(username=username).first()
+
+        if user and check_password_hash(user.password_hash, password):
+            logger.info(f'"{username}" successfully logged in')
+            flash('You have successfully logged in!', 'success')
+            return redirect("/rooms")
+        else:
+            logger.error(f'Authentication failed for {username}')
+            flash('Invalid username or password', 'error')
+            return redirect(url_for('login'))
+        
+    return render_template('login.html')
 
 @app.route("/")
 def index():
-    logger.info('Redirect home page')
-    return redirect('/rooms')
+    logger.info('Redirect login page')
+    return redirect('/login')
 
 @app.route("/rooms", methods=['GET'])
 def get_rooms():
