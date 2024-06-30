@@ -7,3 +7,4 @@ flask-restx
 plotly
 pandas
 gunicorn
+werkzeug
