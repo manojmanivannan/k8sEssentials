@@ -115,11 +115,11 @@ if [[ $DOCKER_BUILD == "true" ]]; then
     minikube image save manojmanivannan18/flaskedge:master $HOME/.minikube/cache/images/manojmanivannan18_flaskedge_master --daemon=true
   fi
   echo "Setting python-app values to use local image"
-  sed -i 's/pullPolicy:.*/pullPolicy: IfNotPresent/' ./helm/python-app/charts/python-app/values.yaml
+  sed -i 's/pullPolicy:.*/pullPolicy: IfNotPresent/' ./helm/python-app/values.yaml
 else
   echo "Docker image build disabled"
   echo "Setting python-app values to pull remote image"
-  sed -i 's/pullPolicy:.*/pullPolicy: Always/' ./helm/python-app/charts/python-app/values.yaml
+  sed -i 's/pullPolicy:.*/pullPolicy: Always/' ./helm/python-app/values.yaml
 fi
 
 
